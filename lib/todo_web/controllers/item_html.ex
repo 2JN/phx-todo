@@ -40,4 +40,8 @@ defmodule TodoWeb.ItemHTML do
       false -> "item"
     end
   end
+
+  def got_items?(items) do
+    Enum.filter(items, &(&1.status < 2)) |> Enum.count() > 0
+  end
 end

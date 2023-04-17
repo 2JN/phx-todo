@@ -52,4 +52,9 @@ defmodule TodoWeb.ItemHTMLTest do
 
     assert ItemHTML.pluralise([%{text: "one", status: 1}]) == "items"
   end
+
+  test "got_items?/1 works" do
+    assert ItemHTML.got_items?([]) == false
+    assert ItemHTML.got_items?([%{text: "one", status: 0}]) == true
+  end
 end

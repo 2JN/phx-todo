@@ -51,23 +51,25 @@
       <% end %>
     </ul>
   </section>
-  <footer class="footer">
-    <div>
-      <strong class="font-light"><%= remaining_items(@items) %> <%= pluralise(@items) %></strong>
-    </div>
-    <ul class="filters">
-      <li>
-        <a href={~p"/items/filter/items"} class={[@filter == "items" && "selected"]}>All</a>
-      </li>
-      <li>
-        <a href={~p"/items/filter/active"} class={[@filter == "active" && "selected"]}>Active</a>
-      </li>
-      <li>
-        <a href={~p"/items/filter/completed"} class={[@filter == "completed" && "selected"]}>Completed</a>
-      </li>
-    </ul>
-    <a class="hover:underline z-10" href={~p"/items/clear"}>
-      Clear completed
-    </a>
-  </footer>
+  <%= if got_items?(@items) do %>
+    <footer class="footer">
+      <div>
+        <strong class="font-light"><%= remaining_items(@items) %> <%= pluralise(@items) %> left</strong>
+      </div>
+      <ul class="filters">
+        <li>
+          <a href={~p"/items/filter/items"} class={[@filter == "items" && "selected"]}>All</a>
+        </li>
+        <li>
+          <a href={~p"/items/filter/active"} class={[@filter == "active" && "selected"]}>Active</a>
+        </li>
+        <li>
+          <a href={~p"/items/filter/completed"} class={[@filter == "completed" && "selected"]}>Completed</a>
+        </li>
+      </ul>
+      <a class="hover:underline z-10" href={~p"/items/clear"}>
+        Clear completed
+      </a>
+    </footer>
+  <% end %>
 </section>

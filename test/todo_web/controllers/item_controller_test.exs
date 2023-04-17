@@ -134,6 +134,23 @@ defmodule TodoWeb.ItemControllerTest do
     end
   end
 
+  describe "footer" do
+    setup [:create_item]
+
+    test "hides footer", %{conn: conn} do
+      conn = get(conn, ~p"/items")
+
+      refute html_response(conn, 200) =~ "items left"
+    end
+
+    test "shows footer", %{conn: conn} do
+      conn = post(conn, ~p"/items", item: @public_completed_attrs)
+      conn = get(conn, ~p"/items")
+
+      assert html_response(conn, 200) =~ "item left"
+    end
+  end
+
   defp create_item(_) do
     item = item_fixture(@create_attrs)
     %{item: item}
