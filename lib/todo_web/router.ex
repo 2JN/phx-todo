@@ -17,7 +17,7 @@ defmodule TodoWeb.Router do
   scope "/", TodoWeb do
     pipe_through(:browser)
 
-    get("/", PageController, :home)
+    get("/", ItemController, :index)
     get("/items/clear", ItemController, :clear_completed)
     get("/items/toggle/:id", ItemController, :toggle)
     get("/items/filter/:filter", ItemController, :index)
