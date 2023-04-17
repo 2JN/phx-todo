@@ -35,7 +35,7 @@
                   <%= text_input f, :text, class: "new-todo" %>
               </.form>
             <% else %>
-              <.link href={~p"/items/#{item}/edit"} class="dblclick">
+              <.link href={~p"/items/#{item}/edit"}>
                 <label><%= item.text %></label>
               </.link>
             <% end %>
@@ -52,9 +52,9 @@
     </ul>
   </section>
   <footer class="footer">
-    <span class="todo-count">
-      <strong class="font-light"><%= remaining_items(@items) %></strong> items left
-    </span>
+    <div>
+      <strong class="font-light"><%= remaining_items(@items) %> <%= pluralise(@items) %></strong>
+    </div>
     <ul class="filters">
       <li>
         <a href={~p"/items/filter/items"} class={[@filter == "items" && "selected"]}>All</a>

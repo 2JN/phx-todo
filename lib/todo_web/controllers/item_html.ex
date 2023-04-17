@@ -33,4 +33,11 @@ defmodule TodoWeb.ItemHTML do
       _ -> Enum.filter(items, &(&1.status !== 2))
     end
   end
+
+  def pluralise(items) do
+    case remaining_items(items) == 0 || remaining_items(items) > 1 do
+      true -> "items"
+      false -> "item"
+    end
+  end
 end

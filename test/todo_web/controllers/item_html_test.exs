@@ -41,4 +41,15 @@ defmodule TodoWeb.ItemHTMLTest do
     assert length(ItemHTML.filter(items, "completed")) == 2
     assert length(ItemHTML.filter(items, "any")) == 4
   end
+
+  test "pluralise/1 returns item for 1 item and items for < 1 <" do
+    assert ItemHTML.pluralise([%{text: "one", status: 0}]) == "item"
+
+    assert ItemHTML.pluralise([
+             %{text: "one", status: 0},
+             %{text: "two", status: 0}
+           ]) == "items"
+
+    assert ItemHTML.pluralise([%{text: "one", status: 1}]) == "items"
+  end
 end
