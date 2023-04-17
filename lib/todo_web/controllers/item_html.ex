@@ -21,7 +21,16 @@ defmodule TodoWeb.ItemHTML do
   end
 
   def remaining_items(items) do
-    Enum.filter(items, fn i -> i.status == 0 end)
+    Enum.filter(items, &(&1.status == 0))
     |> Enum.count()
+  end
+
+  def filter(items, str) do
+    case str do
+      "items" -> Enum.filter(items, &(&1.status !== 2))
+      "active" -> Enum.filter(items, &(&1.status == 0))
+      "completed" -> Enum.filter(items, &(&1.status == 1))
+      _ -> Enum.filter(items, &(&1.status !== 2))
+    end
   end
 end

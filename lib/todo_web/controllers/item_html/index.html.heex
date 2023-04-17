@@ -19,7 +19,7 @@
     <% end %>
   <section class="relative border border-solid border-zinc-100 z-10">
     <ul class="todo-list">
-      <%= for item <- @items do %>
+      <%= for item <- filter(@items, @filter) do %>
         <li data-id={item.id} class={complete(item)}>
           <%= if item.status == 1 do %>
             <.link href={~p"/items/toggle/#{item.id}"} class="toggle checked" type="checkbox">
@@ -52,18 +52,22 @@
     </ul>
   </section>
   <footer class="footer">
-    <span class="todo-count"><strong class="font-light"><%= remaining_items(@items) %></strong> items left</span>
+    <span class="todo-count">
+      <strong class="font-light"><%= remaining_items(@items) %></strong> items left
+    </span>
     <ul class="filters">
       <li>
-        <a href="#/" class="selected">All</a>
+        <a href={~p"/items/filter/items"} class={[@filter == "items" && "selected"]}>All</a>
       </li>
       <li>
-        <a href="#/active">Active</a>
+        <a href={~p"/items/filter/active"} class={[@filter == "active" && "selected"]}>Active</a>
       </li>
       <li>
-        <a href="#/completed">Completed</a>
+        <a href={~p"/items/filter/completed"} class={[@filter == "completed" && "selected"]}>Completed</a>
       </li>
     </ul>
-    <button class="clear-completed" style="display: none;"></button>
+    <a class="hover:underline z-10" href={~p"/items/clear"}>
+      Clear completed
+    </a>
   </footer>
 </section>

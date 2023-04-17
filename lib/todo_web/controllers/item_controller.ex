@@ -1,6 +1,8 @@
 defmodule TodoWeb.ItemController do
   use TodoWeb, :controller
+  import Ecto.Query
 
+  alias Todo.Repo
   alias Todo.List
   alias Todo.Helpers
   alias Todo.List.Item
@@ -15,7 +17,15 @@ defmodule TodoWeb.ItemController do
 
     items = List.list_items()
     changeset = List.change_item(item)
-    render(conn, :index, items: items, changeset: changeset, editing: item)
+
+    render(
+      conn,
+      :index,
+      items: items,
+      changeset: changeset,
+      editing: item,
+      filter: Map.get(params, "filter", "all")
+    )
   end
 
   def new(conn, _params) do
@@ -73,5 +83,13 @@ defmodule TodoWeb.ItemController do
 
     conn
     |> redirect(to: ~p"/items")
+  end
+
+  def clear_completed(conn, _param) do
+    person_id = 0
+    query = from(i in Item, where: i.person_id == ^person_id, where: i.status == 1)
+    Repo.update_all(query, set: [status: 2])
+
+    index(conn, %{filter: "all"})
   end
 end

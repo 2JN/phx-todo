@@ -7,6 +7,7 @@ defmodule TodoWeb.ItemControllerTest do
   @create_attrs %{person_id: 42, status: 0, text: "some text"}
   @public_create_attrs %{person_id: 0, status: 0, text: "some public text"}
   @completed_attrs %{person_id: 42, status: 1, text: "some text completed"}
+  @public_completed_attrs %{person_id: 0, status: 1, text: "some text completed"}
   @update_attrs %{person_id: 43, status: 43, text: "some updated text"}
   @invalid_attrs %{person_id: nil, status: nil, text: nil}
 
@@ -14,6 +15,16 @@ defmodule TodoWeb.ItemControllerTest do
     test "lists all items", %{conn: conn} do
       conn = get(conn, ~p"/items")
       assert html_response(conn, 200) =~ "todos"
+    end
+
+    test "lists items in filter", %{conn: conn} do
+      conn = post(conn, ~p"/items", item: @public_create_attrs)
+
+      conn = get(conn, ~p"/items/filter/active")
+      assert html_response(conn, 200) =~ @public_create_attrs.text
+
+      conn = get(conn, ~p"/items/filter/completed")
+      refute html_response(conn, 200) =~ @public_create_attrs.text
     end
   end
 
@@ -96,6 +107,30 @@ defmodule TodoWeb.ItemControllerTest do
       get(conn, ~p"/items/toggle/#{item.id}")
       toggled_item = List.get_item!(item.id)
       assert toggled_item.status == 1
+    end
+  end
+
+  describe "clear completed" do
+    setup [:create_item]
+
+    test "clears the completed items", %{conn: conn} do
+      conn = post(conn, ~p"/items", item: @public_completed_attrs)
+      conn = get(conn, ~p"/items/clear")
+
+      completed_item = Enum.at(conn.assigns.items, 1)
+
+      assert conn.assigns.filter == "all"
+      assert completed_item.status == 2
+    end
+
+    test "clears the completed items in public (person_id=0)", %{conn: conn} do
+      conn = post(conn, ~p"/items", item: @public_completed_attrs)
+      conn = get(conn, ~p"/items/clear")
+
+      completed_item = Enum.at(conn.assigns.items, 1)
+
+      assert conn.assigns.filter == "all"
+      assert completed_item.status == 2
     end
   end
 

@@ -161,7 +161,7 @@ label[for="toggle-all"]:before {
     border-t border-solid border-zinc-100 text-center text-zinc-300;
 }
 
-.footer:before {
+.footer:after {
   content: "";
   position: absolute;
   right: 0;
@@ -175,7 +175,7 @@ label[for="toggle-all"]:before {
 }
 
 .filters {
-  @apply flex;
+  @apply flex z-10;
 }
 
 .filters li a {
@@ -188,19 +188,6 @@ label[for="toggle-all"]:before {
 
 .filters li a.selected {
   border-color: rgba(175, 47, 47, 0.2);
-}
-
-.clear-completed,
-html .clear-completed:active {
-  float: right;
-  position: relative;
-  line-height: 20px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.clear-completed:hover {
-  text-decoration: underline;
 }
 
 .info {
