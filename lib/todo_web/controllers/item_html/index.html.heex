@@ -8,7 +8,7 @@
       <.link
         href={~p"/items"}
         method="get"
-        class="new-todo"
+        class="new-todo w-full"
       >
         Click here to create a new item!
       </.link>
@@ -31,21 +31,48 @@
 
           <div class="view">
             <%= if item.id == @editing.id do %>
-              <.form :let={f} for={@changeset} action={~p"/items/#{item.id}"}>
+              <.form
+                :let={f}
+                for={@changeset}
+                action={~p"/items/#{item.id}"}
+                class="w-full max-w-full space-y-px"
+              >
                   <%= text_input f, :text, class: "new-todo" %>
+                  <%= datetime_local_input f, :due_date, class: "new-todo" %>
+                  <div class="flex">
+                    <.link
+                      class="px-1 py-2 flex-auto text-center !text-white bg-red-300 hover:bg-red-500"
+                      href={~p"/items/#{item}"}
+                      method="delete"
+                    >
+                      Delete
+                    </.link>
+                    <button type="submit" class="px-1 py-2 flex-auto text-center text-white bg-green-300 hover:bg-green-500">
+                      Save
+                    </button>
+                  </div>
               </.form>
             <% else %>
-              <.link href={~p"/items/#{item}/edit"}>
-                <label><%= item.text %></label>
+              <.link href={~p"/items/#{item}/edit"} class="flex-auto">
+                <label>
+                  <%= item.text %>
+                  <%= if item.due_date do %>
+                    <br />
+                    <span class="text-xs float-right mb-2"><%= parse_date(item.due_date) %></span>
+                  <% end %>
+                </label>
+              </.link>
+
+              <.link
+                class="destroy"
+                href={~p"/items/#{item}"}
+                method="delete"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </.link>
             <% end %>
-
-            <.link
-              class="destroy"
-              href={~p"/items/#{item}"}
-              method="delete"
-            >
-            </.link>
           </div>
         </li>
       <% end %>

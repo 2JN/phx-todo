@@ -35,7 +35,7 @@ defmodule TodoWeb.ItemController do
 
   def create(conn, %{"item" => item_params}) do
     case List.create_item(item_params) do
-      {:ok, item} ->
+      {:ok, _item} ->
         conn
         |> put_flash(:info, "Item created successfully.")
         |> redirect(to: ~p"/items")
@@ -58,7 +58,7 @@ defmodule TodoWeb.ItemController do
     item = List.get_item!(id)
 
     case List.update_item(item, item_params) do
-      {:ok, item} ->
+      {:ok, _item} ->
         conn
         |> put_flash(:info, "Item updated successfully.")
         |> redirect(to: ~p"/items")

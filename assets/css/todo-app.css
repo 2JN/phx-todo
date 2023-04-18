@@ -3,8 +3,8 @@
 }
 
 .new-todo {
-  @apply w-full block relative border-none p-4 pl-14 text-2xl
-  text-zinc-600 placeholder-zinc-300 focus:ring-zinc-400;
+  @apply block w-full max-w-full relative border-none p-4 pl-14
+  text-2xl text-zinc-600 placeholder-zinc-300 focus:ring-zinc-400;
 }
 
 label[for="toggle-all"] {
@@ -46,12 +46,8 @@ label[for="toggle-all"]:before {
 }
 
 .todo-list li .destroy {
-  @apply hidden w-10 h-10 my-auto absolute top-0 right-2 bottom-0 
-    text-red-300 text-3xl transition-colors hover:text-red-500;
-}
-
-.todo-list li .destroy:after {
-  content: "×";
+  @apply w-9 m-auto text-red-300
+    transition-colors z-10 hover:text-red-500;
 }
 
 .todo-list li:hover .destroy {
@@ -82,7 +78,7 @@ label[for="toggle-all"]:before {
 }
 
 .filters li a.selected {
-  @apply hover:border-red-300;
+  @apply border-red-300;
 }
 
 /*
@@ -103,12 +99,12 @@ label[for="toggle-all"]:before {
   background-position: center left;
 }
 
-.view a {
-  @apply block text-zinc-600;
+.view {
+  @apply flex;
 }
 
-.todo-list li .destroy {
-  @apply text-center z-10;
+.view a {
+  @apply block text-zinc-600;
 }
 
 /*

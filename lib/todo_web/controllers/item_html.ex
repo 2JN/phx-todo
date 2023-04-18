@@ -1,5 +1,6 @@
 defmodule TodoWeb.ItemHTML do
   use TodoWeb, :html
+  use Timex
 
   import Phoenix.HTML.Form
 
@@ -43,5 +44,16 @@ defmodule TodoWeb.ItemHTML do
 
   def got_items?(items) do
     Enum.filter(items, &(&1.status < 2)) |> Enum.count() > 0
+  end
+
+  def parse_date(date) do
+    IO.puts(inspect(date))
+    iso_date = DateTime.to_iso8601(date)
+
+    {:ok, date} =
+      Timex.parse!(iso_date, "{ISO:Extended}")
+      |> Timex.format("{Mshort}, {0D} {YYYY} {h24}:{m}")
+
+    date
   end
 end
