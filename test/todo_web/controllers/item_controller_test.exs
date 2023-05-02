@@ -8,7 +8,7 @@ defmodule TodoWeb.ItemControllerTest do
   @public_create_attrs %{person_id: 0, status: 0, text: "some public text"}
   @completed_attrs %{person_id: 42, status: 1, text: "some text completed"}
   @public_completed_attrs %{person_id: 0, status: 1, text: "some text completed"}
-  @update_attrs %{person_id: 43, status: 43, text: "some updated text"}
+  @update_attrs %{person_id: 43, status: 1, text: "some updated text"}
   @invalid_attrs %{person_id: nil, status: nil, text: nil}
 
   describe "index" do

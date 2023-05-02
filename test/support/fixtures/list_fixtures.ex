@@ -12,7 +12,7 @@ defmodule Todo.ListFixtures do
       attrs
       |> Enum.into(%{
         person_id: 42,
-        status: 42,
+        status: 0,
         text: "some text"
       })
       |> Todo.List.create_item()

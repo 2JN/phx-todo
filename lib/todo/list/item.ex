@@ -15,7 +15,9 @@ defmodule Todo.List.Item do
   @doc false
   def changeset(item, attrs) do
     item
-    |> cast(attrs, [:text, :person_id, :status, :due_date])
+    |> cast(attrs, [:text, :person_id, :status])
     |> validate_required([:text])
+    |> validate_number(:status, greater_than_or_equal_to: 0, less_than_or_equal_to: 2)
+    |> validate_length(:text, min: 0)
   end
 end

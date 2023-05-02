@@ -14,6 +14,13 @@ defmodule TodoWeb.Router do
     plug(:accepts, ["json"])
   end
 
+  scope "/api", TodoWeb do
+    pipe_through(:api)
+
+    put("/items/:id/status", ApiController, :update_status)
+    resources("items", ApiController, only: [:create, :update, :index])
+  end
+
   scope "/", TodoWeb do
     pipe_through(:browser)
 
